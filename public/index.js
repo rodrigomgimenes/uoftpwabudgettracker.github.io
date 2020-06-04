@@ -20,17 +20,22 @@ function populateTotal() {
     return total + parseInt(t.value);
   }, 0);
 
-  let totalEl = document.querySelector("#total");
+  let totalEl         = document.querySelector("#total");
   totalEl.textContent = total;
 }
 
 function populateTable() {
-  let tbody = document.querySelector("#tbody");
+  let tbody       = document.querySelector("#tbody");
   tbody.innerHTML = "";
 
   transactions.forEach(transaction => {
     // create and populate a table row
     let tr = document.createElement("tr");
+
+    if (parseInt(transaction.value) < 0) {
+      tr.classList.add("text-danger");
+    }
+
     tr.innerHTML = `
       <td>${transaction.name}</td>
       <td>${transaction.value}</td>
@@ -71,7 +76,7 @@ function populateChart() {
         datasets: [{
             label: "Total Over Time",
             fill: true,
-            backgroundColor: "#6666ff",
+            backgroundColor: "#af8baf",
             data
         }]
     }
@@ -79,9 +84,9 @@ function populateChart() {
 }
 
 function sendTransaction(isAdding) {
-  let nameEl = document.querySelector("#t-name");
-  let amountEl = document.querySelector("#t-amount");
-  let errorEl = document.querySelector(".form .error");
+  let nameEl   = isAdding ? document.querySelector("#t-name-add")   : document.querySelector("#t-name-sub");
+  let amountEl = isAdding ? document.querySelector("#t-amount-add") : document.querySelector("#t-amount-sub");
+  let errorEl  = isAdding ? document.querySelector("#error-add")    : document.querySelector("#error-sub");
 
   // validate form
   if (nameEl.value === "" || amountEl.value === "") {
@@ -94,9 +99,9 @@ function sendTransaction(isAdding) {
 
   // create record
   let transaction = {
-    name: nameEl.value,
+    name:  nameEl.value,
     value: amountEl.value,
-    date: new Date().toISOString()
+    date:  new Date().toISOString()
   };
 
   // if subtracting funds, convert amount to negative number
@@ -126,11 +131,11 @@ function sendTransaction(isAdding) {
   })
   .then(data => {
     if (data.errors) {
-      errorEl.textContent = "Missing Information";
+       errorEl.textContent = "Missing Information";
     }
     else {
       // clear form
-      nameEl.value = "";
+      nameEl.value   = "";
       amountEl.value = "";
     }
   })
@@ -139,7 +144,7 @@ function sendTransaction(isAdding) {
     saveRecord(transaction);
 
     // clear form
-    nameEl.value = "";
+    nameEl.value   = "";
     amountEl.value = "";
   });
 }

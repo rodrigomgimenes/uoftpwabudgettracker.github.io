@@ -4,42 +4,136 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="theme-color" content="#317EFB">
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'>
   <link rel="shortcut icon" href="icons/icon-192x192.png" type="image/x-icon">
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Material+Icons">
   <link rel="stylesheet" href="styles.css">
-  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="manifest" href="manifest.webmanifest">
 
   <title>Budget Tracker</title>
 </head>
 <body>
   <div class="wrapper">
-    <div class="total">
-      <div class="total">Your total is: $<span id="total">0</span></div>
+    <div class="content">
+      <div class="container-fluid">
+        <h2 class="breadcrumb">Budget Tracker</h2>
+        <div class="row">
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+              <div class="card-header card-header-warning card-header-icon">
+                <div class="card-icon">
+                  <i class="material-icons">account_balance</i>
+                </div>
+                <p class="card-category">Total</p>
+                <h3 class="card-title">$ <span id="total">0</span>.00
+                </h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons">warning</i>
+                  Current amount available.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6"></div>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card">
+              <div class="card-header card-header-success">
+                <i class="material-icons">attach_money</i>
+                <h3 class="card-title figure float-right">Add Funds</h3>
+              </div>
+              <div class="card-body" id="card-add">
+                <div class="input-container">
+                  <input class="input-green" type="text" id="t-name-add" required=""/>
+                  <label>Transaction Name</label>	
+                  <input class="input-green" type="number" min="0" id="t-amount-add" placeholder="Amount" />		
+                </div>
+                <button type="button" id="add-btn" class="btn btn-success ml-3 float-right">Add</button>
+                <p class="card-category">
+                  <i class="material-icons text-success">trending_up</i> This transaction will <span class="text-success">increase</span> your total amount.
+                </p>
+                <div class="card-footer">
+                  <div class="stats text-warning" id="error-add"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card">
+              <div class="card-header card-header-danger">
+                <i class="material-icons">money_off</i>
+                <h3 class="card-title figure float-right">Subtract Funds</h3>
+              </div>
+              <div class="card-body" id="card-sub">
+                <div class="input-container">
+                  <input class="input-red" type="text" id="t-name-sub" required=""/>
+                  <label>Transaction Name</label>	
+                  <input class="input-red" type="number" min="0" id="t-amount-sub" placeholder="Amount" />	
+                </div>
+                <button type="button" id="sub-btn" class="btn btn-danger ml-3 float-right">Subtract</button>
+                <p class="card-category">
+                  <i class="material-icons text-danger">trending_down</i> This transaction will <span class="text-danger">decrease</span> your total amount.
+                </p>
+                <div class="card-footer">
+                  <div class="stats text-warning" id="error-sub"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <div class="card">
+              <div class="card-header card-header-tabs card-header-primary">
+                <div class="nav-tabs-navigation">
+                  <div class="nav-tabs-wrapper">
+                    <h4 class="nav-tabs-title">Chart:</h4>
+                    <ul class="nav nav-tabs" data-tabs="tabs">
+                      <li class="nav-item">
+                        <a class="nav-link active" href="javascript:void(0);" style="cursor: default;">
+                          <i class="material-icons">timeline</i> Statistics & graph information
+                          <div class="ripple-container"></div>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="tab-content">
+                  <canvas id="myChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-12">
+            <div class="card">
+              <div class="card-header card-header-info">
+                <h4 class="card-title">Transaction Stats</h4>
+                <p class="card-category">List of all transaction made</p>
+              </div>
+              <div class="card-body table-responsive">
+                <table class="table table-hover">
+                  <thead class="text-info">
+                    <th>Transaction</th>
+                    <th>Amount</th>
+                  </thead>
+                  <tbody id="tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div class="form">
-      <input type="text" id="t-name" placeholder="Name of transaction" />
-      <input type="number" min="0" id="t-amount" placeholder="Transaction amount" />
-      <button id="add-btn"><i class="fa fa-plus buttons"></i> Add Funds</button>
-      <button id="sub-btn"><i class="fa fa-minus"></i> Subtract Funds</button>
-      <p class="error"></p>
-    </div>
-
-    <div class="transactions">
-      <table>
-        <thead>
-          <th>Transaction</th>
-          <th>Amount</th>
-        </thead>
-        <tbody id="tbody">
-          
-        </tbody>
-      </table>
-    </div>
-    
-    <canvas id="myChart"></canvas>
+    <footer class="footer">
+      <div class="container-fluid">
+        <div class="copyright">Design by RMG • &copy; All rights reserved.</div>
+      </div>
+    </footer>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
