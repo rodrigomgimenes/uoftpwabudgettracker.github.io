@@ -3,7 +3,7 @@
 
   ## File:
 
-  * ['eat-a-burger'](https://github.com/rodrigomgimenes/uoftpwabudgettracker.github.io/)
+  * ['pwa-budget-tracker'](https://github.com/rodrigomgimenes/uoftpwabudgettracker.github.io/)
 
   ## Description:
   Homework 18 PWA - Online/Offline Budget Trackers
@@ -20,7 +20,7 @@
     4. After the action above is completed, type the following command: node server.js
     
     OR 
-    1. Access the following webpage: 
+    1. Access the following webpage: https://guarded-cove-12055.herokuapp.com/
 
     Then:
     1. Type a transaction name inside the text field (Add or Subtract Funds), insert the amount you would like to add or subtract  and click on the corresponding button.
